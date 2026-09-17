@@ -3,6 +3,6 @@
 using namespace std;
 
 int main() {
-    cout << "Hello, World!" << endl;
+    cout << "Phantom Disk daemon starting...\n";
     return 0;
 }
