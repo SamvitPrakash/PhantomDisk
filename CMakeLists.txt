@@ -15,6 +15,7 @@ add_subdirectory(lib/spdlog)
 add_executable(PhantomDiskd
     ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/daemonctl/daemonctl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/rclonectl/rclonectl.cpp
 )
 
 target_include_directories(PhantomDiskd PRIVATE
