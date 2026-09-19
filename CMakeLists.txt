@@ -13,7 +13,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 add_subdirectory(lib/spdlog)
 
 add_executable(PhantomDiskd
-    src/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/daemonctl/daemonctl.cpp
+)
+
+target_include_directories(PhantomDiskd PRIVATE
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/include
 )
 
 target_link_libraries(PhantomDiskd PRIVATE
