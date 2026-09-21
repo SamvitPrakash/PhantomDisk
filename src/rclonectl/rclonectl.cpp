@@ -21,7 +21,7 @@ bool RcloneCtl::mount() {
             "rclone",
             "mount",
             "OneDrive:",
-            "/home/_c3rberus/GitHub/PhantomDisk/mnt",
+            "/home/_c3rberus/Documents/Github/PhantomDisk/mnt",
             static_cast<char*>(nullptr)
         );
 

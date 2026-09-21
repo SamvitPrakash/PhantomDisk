@@ -3,17 +3,18 @@ SRC_DIR=src
 BUILD_DIR=build
 
 # FILES
-BINARY=$(BUILD_DIR)/PhantomDiskd
+SOURCES := $(shell find $(SRC_DIR) -type f -name '*.cpp')
+BINARY=$(BUILD_DIR)/Phantomd
 TARGET=$(SRC_DIR)/main.cpp
 
 # RULES
 all: $(BINARY)
 
-$(BINARY): $(BUILD_DIR) $(SRC_DIR)/main.cpp
-	cmake --build $(BUILD_DIR)
-
 $(BUILD_DIR):
 	cmake -S . -B $(BUILD_DIR)
+
+$(BINARY): $(BUILD_DIR) $(SOURCES)
+	cmake --build $(BUILD_DIR)
 
 run: $(BINARY)
 	./$(BINARY)

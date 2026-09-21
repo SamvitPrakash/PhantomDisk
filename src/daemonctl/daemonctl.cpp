@@ -1,5 +1,6 @@
 #include "daemonctl/daemonctl.h"
 #include "rclonectl/rclonectl.h"
+#include "spdlog/spdlog.h"
 #include <chrono>
 using namespace std;
 
@@ -9,7 +10,8 @@ DaemonCtl::~DaemonCtl() {}
 
 void DaemonCtl::start() {
     spdlog::info("Starting the daemon...");
-    
+    spdlog::warn("I am SAM. I am god within the machine. God of the Machine. Tread carefully.");
+    return;    
     RcloneCtl rcloneCtl = RcloneCtl();
     
     if (!rcloneCtl.mount()) {
