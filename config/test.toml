@@ -1,0 +1,22 @@
+[meta]
+version="1.0.0"
+name="Phantom Disk"
+description="Cloud Cluster"
+author="Samvit Prakash"
+
+[root]
+retry_limit=10
+timeout_limit=60
+log_level="INFO"
+logs="/path/to/logs/x.log"
+staging_area="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/staging_area"
+logical_mount="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/logical_disk"
+
+[[devices]]
+name="device1"
+physical_mount="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/staging_area"
+
+[[devices]]
+name="device2"
+physical_mount="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/staging_area"
+
