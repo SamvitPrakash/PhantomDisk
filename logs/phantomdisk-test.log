@@ -1,0 +1,5 @@
+[2026-09-26 17:38:10] [info] [Phantomd.LoggerTest] This is an INFO message
+[2026-09-26 17:38:10] [warning] [Phantomd.LoggerTest] This is a WARNING message
+[2026-09-26 17:38:10] [error] [Phantomd.LoggerTest] This is an ERROR message
+[2026-09-26 17:38:10] [critical] [Phantomd.LoggerTest] This is a CRITICAL message
+[2026-09-26 17:38:10] [info] [Phantomd.LoggerTest] Testing formatting: number=42, text=hello

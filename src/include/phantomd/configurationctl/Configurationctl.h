@@ -1,5 +1,4 @@
-#ifndef CONFIGURATIONCTL_H
-#define CONFIGURATIONCTL_H
+#pragma once
 
 #include <filesystem>
 #include <toml++/toml.h>
@@ -112,5 +111,3 @@ class Configurationctl {
         ~Configurationctl();
 
 };
-
-#endif
