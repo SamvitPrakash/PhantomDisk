@@ -12,10 +12,22 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(lib/spdlog)
 
+add_library(logger STATIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/include/logger/Logger.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/logger/Logger.cpp
+)
+
+target_include_directories(logger PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/include/logger
+)
+
+target_link_libraries(logger PUBLIC
+    spdlog::spdlog_header_only
+)
+
 add_executable(Phantomd
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/Phantomd.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/configurationctl/Configurationctl.cpp
-    
 )
 
 add_executable(Phantom
@@ -29,6 +41,7 @@ add_executable(PhantomHaunt
 target_include_directories(Phantomd PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/include/phantomd
 )
+
 target_include_directories(Phantom PRIVATE
     ${CMAKE_CURRENT_SOURCE_DIR}/src/include/phantom
 )
@@ -38,15 +51,15 @@ target_include_directories(PhantomHaunt PRIVATE
 )
 
 target_link_libraries(Phantomd PRIVATE
-    spdlog::spdlog
+    logger
 )
 
 target_link_libraries(Phantom PRIVATE
-    spdlog::spdlog
+    logger
 )
 
 target_link_libraries(PhantomHaunt PRIVATE
-    spdlog::spdlog
+    logger
 )
 
 target_compile_options(Phantomd PRIVATE
