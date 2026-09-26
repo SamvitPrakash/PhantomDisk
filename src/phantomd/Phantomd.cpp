@@ -24,7 +24,7 @@ int main(){
         log->info("Testing formatting: number={}, text={}", 42, "hello");
 
         std::cout << "Logger test completed.\n";
-        std::cout << "Log file: /tmp/phantomdisk-test.log\n";
+        std::cout << "Log file: /home/_c3rberus/Documents/Github/PhantomDisk/logs/phantomdisk-test.log\n";
 
         return 0;
     }

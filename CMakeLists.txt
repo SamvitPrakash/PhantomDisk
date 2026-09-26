@@ -28,6 +28,8 @@ target_link_libraries(logger PUBLIC
 add_executable(Phantomd
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/Phantomd.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/configurationctl/Configurationctl.cpp
+    src/phantomd/storage/StorageManager.cpp
+    src/phantomd/storage/Device.cpp
 )
 
 add_executable(Phantom
