@@ -30,17 +30,18 @@ bool Device::mount() {
             
             return STATE == DeviceState::MOUNTED;
         });
+    }else{
+        STATE = DeviceState::ERROR;
+        return STATE == DeviceState::MOUNTED;
     }
 
-    STATE = DeviceState::ERROR;
-
-    return STATE == DeviceState::MOUNTED;
+    return true;
     
 }
 
 bool Device::unmount() {
     if(ADAPTER) {
-        if(ADAPTER->unmount(NAME)) STATE = DeviceState::UNMOUNTED;
+        if(ADAPTER->unmount(MOUNTING_POINT)) STATE = DeviceState::UNMOUNTED;
         else STATE = DeviceState::ERROR;
 
         if(MOUNTING_THREAD.joinable()) {
