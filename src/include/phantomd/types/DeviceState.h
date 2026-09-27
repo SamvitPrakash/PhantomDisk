@@ -5,5 +5,4 @@ enum class DeviceState {
     MOUNTED,
     ERROR,
     OFFLINE,
-    UNREACHABLE
 };
