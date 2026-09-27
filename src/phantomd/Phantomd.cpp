@@ -1,38 +1,22 @@
 #include <iostream>
-#include "Logger.h"
-#include "spdlog/common.h"
+#include "rclone_adapter/RcloneAdapter.h"
 
 using namespace std;
 
 int main(){
-    try {
-        Logger logger(
-            "Phantomd",
-            "/home/_c3rberus/Documents/Github/PhantomDisk/logs/phantomdisk-test.log",
-            spdlog::level::info
-        );
+    RcloneAdapter adapter = RcloneAdapter();
 
-        auto log = logger.get("LoggerTest");
+    if(adapter.probe("OneDrive:")){
+        cout << "Remote is accessible." << endl;
 
-        log->trace("This is a TRACE message");
-        log->debug("This is a DEBUG message");
-        log->info("This is an INFO message");
-        log->warn("This is a WARNING message");
-        log->error("This is an ERROR message");
-        log->critical("This is a CRITICAL message");
-
-        log->info("Testing formatting: number={}, text={}", 42, "hello");
-
-        std::cout << "Logger test completed.\n";
-        std::cout << "Log file: /home/_c3rberus/Documents/Github/PhantomDisk/logs/phantomdisk-test.log\n";
-
-        return 0;
+        if(adapter.mount("OneDrive:", "/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/staging_area")){
+            cout << "Mounted successfully." << endl;
+        } else {
+            cout << "Failed to mount." << endl;
+        }
+    } else {
+        cout << "Remote is not accessible." << endl;
     }
-    catch (const std::exception& ex) {
-        std::cerr << "Logger test failed: "
-                  << ex.what()
-                  << '\n';
 
-        return 1;
-    }
+    return 0;
 }
