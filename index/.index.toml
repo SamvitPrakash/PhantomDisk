@@ -1,0 +1,9 @@
+[root]
+generation = 8
+last_updated = 1790707483
+name = 'OneDrive:'
+
+[[index]]
+device = 'new_device'
+logical_mount = '/mnt/new_device'
+physical_mount = '/dev/sdb'

@@ -31,6 +31,8 @@ add_executable(Phantomd
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/storage/StorageManager.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/storage/Device.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/rclone_adapter/RcloneAdapter.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/indexing/Indexing.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/phantomd/indexing/Index.cpp
 )
 
 add_executable(Phantom
