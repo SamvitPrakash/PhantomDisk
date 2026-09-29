@@ -1,9 +1,12 @@
 #pragma once
 #include <list>
 #include <string>
+#include "storage/Device.h"
 
 class StorageManager {
     private:
+        std::list<Device*> devices;
+        
     public:
         StorageManager();
         ~StorageManager();

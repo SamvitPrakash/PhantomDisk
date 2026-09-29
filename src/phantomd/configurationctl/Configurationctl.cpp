@@ -1,4 +1,5 @@
 #include "configurationctl/Configurationctl.h"
+#include "types/StorageConfig.h"
 
 #include <stdexcept>
 #include <toml++/impl/array.hpp>
@@ -9,6 +10,23 @@ Configurationctl::Configurationctl(const std::filesystem::path& configFilePath) 
 Configurationctl::Configurationctl() : CONFIG_FILE_PATH("config/config.toml") {}
 
 Configurationctl::~Configurationctl() {}
+
+StorageConfig Configurationctl::getStorageConfig() const {
+    StorageConfig storageConfig;
+
+    storageConfig.RETRY_LIMIT = this->root<int>("retry_limit");
+    storageConfig.STAGING_AREA = this->root<std::string>("staging_area");
+
+    const toml::array *devices = CONFIG["devices"].as_array();
+    for (std::size_t i = 0; i < devices->size(); ++i) {
+        DeviceConfig deviceConfig;
+        deviceConfig.NAME = this->devices<std::string>(i, "name");
+        deviceConfig.MOUNT_POINT = this->devices<std::string>(i, "physical_mount");
+        storageConfig.DEVICES.push_back(deviceConfig);
+    }
+
+    return storageConfig;
+}
 
 bool Configurationctl::load() {
     try {
