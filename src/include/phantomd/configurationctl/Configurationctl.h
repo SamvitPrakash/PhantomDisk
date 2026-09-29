@@ -2,6 +2,7 @@
 
 #include <filesystem>
 #include <toml++/toml.h>
+#include "types/StorageConfig.h"
 
 class Configurationctl {
     private:
@@ -13,6 +14,9 @@ class Configurationctl {
     public:
         Configurationctl();
         Configurationctl(const std::filesystem::path& configFilePath);
+        
+        StorageConfig getStorageConfig() const;
+
         bool load();
         bool save();
 
