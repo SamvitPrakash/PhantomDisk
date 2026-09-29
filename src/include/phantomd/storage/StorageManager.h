@@ -25,4 +25,5 @@ class StorageManager {
         bool unmountDevices();
 
         double healthCheck();
+        StorageState state() const;
 };

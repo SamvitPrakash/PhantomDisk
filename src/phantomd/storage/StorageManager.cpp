@@ -1,7 +1,11 @@
 #include "storage/StorageManager.h"
 #include "rclone_adapter/RcloneAdapter.h"
 #include "types/DeviceState.h"
+#include "types/StorageState.h"
 #include <cstddef>
+
+#include <iostream>
+using namespace std;
 
 StorageManager::StorageManager(StorageConfig config) : CONFIG(config) {
     this->DEVICE_COUNT = 0;
@@ -35,6 +39,9 @@ bool StorageManager::mountDevice(const std::string& name) {
             return device->mount();
         }
     }
+
+    this->STATE = StorageState::DEGRADED;
+
     return false; 
 
 }
@@ -45,6 +52,9 @@ bool StorageManager::unmountDevice(const std::string& name) {
             return device->unmount();
         }
     }
+
+    this->STATE = StorageState::DEGRADED;
+
     return false; 
 }
 
@@ -85,6 +95,13 @@ double StorageManager::healthCheck() {
     if(healthyCount == DEVICE.size()) this->STATE = StorageState::MOUNTED;
     else this->STATE = StorageState::DEGRADED;
 
+    cout << "Health check: " << healthyCount << "/" << DEVICE.size() << " devices are healthy." << endl;
+    cout << "Storage state: " << static_cast<int>(this->STATE) << endl;
+
     return static_cast<double>(healthyCount) / DEVICE.size() * 100;
 
+}
+
+StorageState StorageManager::state() const {
+    return this->STATE;
 }
