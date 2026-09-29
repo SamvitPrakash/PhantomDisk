@@ -16,7 +16,10 @@ class Device {
         Device(std::string name, std::string mount);
         Device(std::string name, std::string mount, RcloneAdapter *adapter);
         ~Device();
+
         DeviceState state() const;
+        std::string name() const;
+
         bool probe();
         bool mount();
         bool unmount();

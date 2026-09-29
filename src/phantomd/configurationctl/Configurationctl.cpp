@@ -12,7 +12,11 @@ Configurationctl::Configurationctl() : CONFIG_FILE_PATH("config/config.toml") {}
 Configurationctl::~Configurationctl() {}
 
 StorageConfig Configurationctl::getStorageConfig() const {
-    StorageConfig storageConfig;
+    if(this->CONFIG.empty()) {
+        throw std::runtime_error("Configuration not loaded. Call load() before accessing storage configuration.");
+    }
+
+    StorageConfig storageConfig = StorageConfig();
 
     storageConfig.RETRY_LIMIT = this->root<int>("retry_limit");
     storageConfig.STAGING_AREA = this->root<std::string>("staging_area");

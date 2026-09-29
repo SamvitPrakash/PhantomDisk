@@ -9,10 +9,10 @@ retry_limit=10
 timeout_limit=60
 log_level="INFO"
 logs="/path/to/logs/x.log"
-staging_area="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/staging_area"
-logical_mount="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/logical_disk"
+staging_area="/home/_c3rberus/GitHub/PhantomDisk/mounting_area/staging_area"
+logical_mount="/home/_c3rberus/GitHub/PhantomDisk/mounting_area/logical_disk"
 
 [[devices]]
 name="OneDrive:"
-physical_mount="/home/_c3rberus/Documents/Github/PhantomDisk/mounting_area/staging_area"
+physical_mount="/home/_c3rberus/GitHub/PhantomDisk/mounting_area/staging_area"
 

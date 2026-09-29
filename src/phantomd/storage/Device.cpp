@@ -1,5 +1,6 @@
 #include "storage/Device.h"
 #include "types/DeviceState.h"
+#include <string>
 
 Device::Device(std::string name, std::string mount) : NAME(name), MOUNTING_POINT(mount), STATE(DeviceState::OFFLINE) {}
 
@@ -18,6 +19,10 @@ bool Device::probe() {
 
 DeviceState Device::state() const {
     return STATE;
+}
+
+std::string Device::name() const {
+    return NAME;
 }
 
 bool Device::mount() {
