@@ -64,12 +64,14 @@ bool StorageManager::unmountDevices() {
     return allUnmounted;
 }
 
-int StorageManager::healthCheck() const {
+double StorageManager::healthCheck() const {
     int healthyCount = 0;
     for (const Device* device : DEVICE) {
         if (device->state() == DeviceState::MOUNTED) {
             healthyCount++;
         }
     }
-    return healthyCount;
+
+    return static_cast<double>(healthyCount) / DEVICE.size() * 100;
+    
 }
