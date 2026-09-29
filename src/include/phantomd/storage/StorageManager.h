@@ -24,5 +24,5 @@ class StorageManager {
         bool unmountDevice(const std::string& name);
         bool unmountDevices();
 
-        double healthCheck() const;
+        double healthCheck();
 };

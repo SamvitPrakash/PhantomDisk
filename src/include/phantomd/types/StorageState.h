@@ -1,9 +1,8 @@
 #pragma once
 
-#include <unistd.h>
 enum class StorageState {
+    OFFLINE,
     MOUNTED,
     UNMOUNTED,
-    DEGRADED,
-    ERROR
+    DEGRADED
 };
