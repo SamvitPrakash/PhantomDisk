@@ -1,10 +1,13 @@
 #pragma once
 #include "types/StorageConfig.h"
+#include <list>
+#include "indexing/Index.h"
 
 class Indexing {
     private:
         StorageConfig CONFIG;
         int GENERATION;
+        std::list<Index*> INDICES;
     
     public:
         Indexing(StorageConfig config);
@@ -12,10 +15,8 @@ class Indexing {
 
         bool validate();
         bool reconcile();
-        bool load();
-
-        // Index getIndex(size_t index);
 
         bool replicate();
+        bool addDevice(std::filesystem::path devicePath);
 
 };

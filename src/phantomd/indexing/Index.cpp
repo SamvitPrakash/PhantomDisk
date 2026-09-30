@@ -9,10 +9,10 @@
 Index::Index(std::filesystem::path path) : ITERATOR_INDEX(0) {
     this->CONFIG_FILE_PATH = path;
     try{
-        this->INDEX = toml::parse_file(path.string());
+        this->INDEX = toml::parse_file(path.string()+"/.index.toml");
         this->DEVICE = this->INDEX["root"]["name"].value_or<std::string>("");
     } catch (const toml::parse_error& err) {
-        throw std::runtime_error("Failed to parse configuration file: " + std::string(err.what()));
+        throw std::runtime_error("Failed to parse index file: " + std::string(err.what()));
         
     }
 }
@@ -126,7 +126,6 @@ bool Index::remove_index(size_t index) {
         return false;
     }
 
-    // (*indexArray)[index].as_table()->clear();
     indexArray->erase(indexArray->begin() + index);
 
     this->increment_root();
