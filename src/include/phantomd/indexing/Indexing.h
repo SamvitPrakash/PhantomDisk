@@ -9,14 +9,16 @@ class Indexing {
         int GENERATION = -1;
         std::list<Index*> INDICES;
     
+        bool validate();
+        bool reconcile();
+        void replicate();
+
     public:
         Indexing(StorageConfig config);
         ~Indexing();
 
-        bool validate();
-        bool reconcile();
+        bool addDevice(std::string name, StorageConfig config);
 
-        bool replicate();
-        bool addDevice(std::filesystem::path devicePath);
+        toml::array* index();
 
 };

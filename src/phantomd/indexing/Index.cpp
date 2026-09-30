@@ -17,6 +17,25 @@ Index::Index(std::filesystem::path path) : ITERATOR_INDEX(0) {
     }
 }
 
+Index::Index(std::filesystem::path path, std::string name) : ITERATOR_INDEX(0) {
+    this->CONFIG_FILE_PATH = path.string() + "/.index.toml";
+    this->DEVICE = name;
+
+    toml::table index;
+    toml::table root;
+
+    root.insert_or_assign("name", name);
+    root.insert_or_assign("generation", 0);
+    root.insert_or_assign("last_updated", std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()));
+    index.insert_or_assign("root", root);
+    index.insert_or_assign("index", toml::array{});
+
+    this->INDEX = index;
+
+    this->save();
+
+}
+
 Index::~Index() {}
 
 void Index::increment_root() {
@@ -44,7 +63,7 @@ std::chrono::system_clock::time_point Index::get_last_updated() const {
     return std::chrono::system_clock::from_time_t(lastUpdated);
 }
 
-bool Index::save() const {
+void Index::save() const {
     try {
         std::ofstream configFile(CONFIG_FILE_PATH);
         if (!configFile.is_open()) {
@@ -54,12 +73,8 @@ bool Index::save() const {
         configFile << this->INDEX;
         configFile.close();
 
-        return true;
-
     } catch (const std::exception& err) {
         throw std::runtime_error("Failed to save index file: " + std::string(err.what()));
-
-        return false;
     }
 }
 
@@ -76,8 +91,8 @@ bool Index::validate() const {
         if(!item.is_table()) return false;
         const auto& table = *item.as_table();
         if(!table.contains("device") || !table["device"].is_string()) return false;
-        if(!table.contains("logical_mount") || !table["logical_mount"].is_string()) return false;
-        if(!table.contains("physical_mount") || !table["physical_mount"].is_string()) return false;
+        if(!table.contains("logical_address") || !table["logical_address"].is_string()) return false;
+        if(!table.contains("physical_address") || !table["physical_address"].is_string()) return false;
     }
     
     return true;
@@ -87,7 +102,22 @@ toml::array* Index::index() {
     return this->INDEX["index"].as_array();
 }
 
+toml::table* Index::index_at(size_t index) {
+    if(index >= this->INDEX["index"].as_array()->size()) {
+        return nullptr;
+    }
+
+    toml::array *indexArray = this->INDEX["index"].as_array();
+    toml::table *indexTable = (*indexArray)[index].as_table();
+
+    return indexTable;
+}
+
 toml::table* Index::next_index() {
+    if(this->ITERATOR_INDEX >= this->INDEX["index"].as_array()->size()) {
+        return nullptr;
+    }
+
     toml::array *indexArray = this->INDEX["index"].as_array();
     toml::table *indexTable = (*indexArray)[this->ITERATOR_INDEX].as_table();
 
@@ -97,6 +127,10 @@ toml::table* Index::next_index() {
 }
 
 toml::table* Index::previous_index() {
+    if(this->ITERATOR_INDEX >= this->INDEX["index"].as_array()->size()) {
+        return nullptr;
+    }
+
     toml::array *indexArray = this->INDEX["index"].as_array();
     toml::table *indexTable = (*indexArray)[this->ITERATOR_INDEX].as_table();
     

@@ -5,6 +5,10 @@ Indexing::Indexing(StorageConfig config) : CONFIG(config), GENERATION(0) {
     for(const auto& device : CONFIG.DEVICES) {
         INDICES.push_back(new Index(device.MOUNT_POINT));
     }
+
+    this->validate();
+    this->reconcile();
+    this->replicate();
 }
 
 Indexing::~Indexing() {
@@ -40,7 +44,7 @@ bool Indexing::reconcile() {
 
 }
 
-bool Indexing::replicate() {
+void Indexing::replicate() {
     toml::array *replicationArray = nullptr;
 
     for (const auto& index : INDICES) {
@@ -58,6 +62,48 @@ bool Indexing::replicate() {
 
         }
     }
+}
 
-    return true;
+bool Indexing::addDevice(std::string name, StorageConfig config) {
+    bool deviceExists = false;
+    this->CONFIG = config;
+
+    for (const auto& device : CONFIG.DEVICES){
+        if(device.NAME == name) {
+            INDICES.push_back(new Index(device.MOUNT_POINT, name));
+            deviceExists = true;
+        }
+    }
+
+    if(deviceExists) {
+        if(!this->validate()) {
+            return false;
+        }
+
+        if(!this->reconcile()) {
+            this->replicate();
+        }
+
+        if(!this->reconcile()) {
+            return false;
+        }
+
+        return true;
+    }
+    
+    return false;
+}
+
+
+toml::array* Indexing::index() {
+    toml::array *indices = nullptr;
+
+    for (const auto& index : INDICES) {
+        if(index->get_generation() == GENERATION) {
+            indices = index->index();
+            break;
+        }
+    }
+
+    return indices;
 }

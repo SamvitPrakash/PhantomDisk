@@ -12,11 +12,12 @@ class Index {
         std::filesystem::path CONFIG_FILE_PATH;
         
         void increment_root();
-        bool save() const;
+        void save() const;
         
     public:
 
         Index(std::filesystem::path path);
+        Index(std::filesystem::path path, std::string name);
         ~Index();
     
         std::chrono::system_clock::time_point get_last_updated() const;

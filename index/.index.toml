@@ -5,5 +5,5 @@ name = 'OneDrive:'
 
 [[index]]
 device = 'new_device'
-logical_mount = '/mnt/new_device'
-physical_mount = '/dev/sdb'
+logical_address = '/mnt/new_device'
+physical_address = '/dev/sdb'

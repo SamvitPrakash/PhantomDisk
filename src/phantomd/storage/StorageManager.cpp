@@ -4,9 +4,6 @@
 #include "types/StorageState.h"
 #include <cstddef>
 
-#include <iostream>
-using namespace std;
-
 StorageManager::StorageManager(StorageConfig config) : CONFIG(config) {
     this->DEVICE_COUNT = 0;
     this->RCLONE_ADAPTER = new RcloneAdapter();
@@ -94,9 +91,6 @@ double StorageManager::healthCheck() {
 
     if(healthyCount == DEVICE.size()) this->STATE = StorageState::MOUNTED;
     else this->STATE = StorageState::DEGRADED;
-
-    cout << "Health check: " << healthyCount << "/" << DEVICE.size() << " devices are healthy." << endl;
-    cout << "Storage state: " << static_cast<int>(this->STATE) << endl;
 
     return static_cast<double>(healthyCount) / DEVICE.size() * 100;
 
