@@ -14,9 +14,50 @@ Indexing::~Indexing() {
 }
 
 bool Indexing::validate() {
-    return false;
+    for (const auto& index : INDICES) {
+        if(!index->validate()) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool Indexing::reconcile() {
-    return false;
+    bool equal = true;
+    
+    for (const auto& index : INDICES) {
+        if(index->get_generation() != GENERATION) {
+            equal = false;
+            
+            if(index->get_generation() > GENERATION) {
+                GENERATION = index->get_generation();
+            }
+        }
+    }
+ 
+    return equal;
+
+}
+
+bool Indexing::replicate() {
+    toml::array *replicationArray = nullptr;
+
+    for (const auto& index : INDICES) {
+        if(index->get_generation() == GENERATION) {
+            replicationArray = index->index();
+            break;
+        }
+    }
+
+    for (const auto& index : INDICES) {
+        if(index->get_generation() != GENERATION) {
+            for(size_t i = 0; i < replicationArray->size(); ++i) {
+                index->update_index(i, *(*replicationArray)[i].as_table());
+            }
+
+        }
+    }
+
+    return true;
 }

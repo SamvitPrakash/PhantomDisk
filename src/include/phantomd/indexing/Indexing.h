@@ -6,7 +6,7 @@
 class Indexing {
     private:
         StorageConfig CONFIG;
-        int GENERATION;
+        int GENERATION = -1;
         std::list<Index*> INDICES;
     
     public:

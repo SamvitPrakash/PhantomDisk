@@ -63,14 +63,24 @@ bool Index::save() const {
     }
 }
 
-toml::table* Index::index_at(size_t index) {
-    toml::array *indexArray = this->INDEX["index"].as_array();
-
-    if(index >= indexArray->size()){
-        return nullptr;
+bool Index::validate() const {
+    // META
+    if(!this->INDEX.contains("root") || !this->INDEX["root"].is_table()) return false;
+    if(!this->INDEX["root"].as_table()->contains("name") || !this->INDEX["root"]["name"].is_string()) return false;
+    if(!this->INDEX["root"].as_table()->contains("generation") || !this->INDEX["root"]["generation"].is_integer()) return false;
+    if(!this->INDEX["root"].as_table()->contains("last_updated") || !this->INDEX["root"]["last_updated"].is_integer()) return false;
+    
+    // INDEX
+    if(!this->INDEX.contains("index") || !this->INDEX["index"].is_array()) return false;
+    for(const auto& item : *this->INDEX["index"].as_array()){
+        if(!item.is_table()) return false;
+        const auto& table = *item.as_table();
+        if(!table.contains("device") || !table["device"].is_string()) return false;
+        if(!table.contains("logical_mount") || !table["logical_mount"].is_string()) return false;
+        if(!table.contains("physical_mount") || !table["physical_mount"].is_string()) return false;
     }
-
-    return (*indexArray)[index].as_table();
+    
+    return true;
 }
 
 toml::array* Index::index() {

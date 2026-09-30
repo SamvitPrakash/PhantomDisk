@@ -23,6 +23,7 @@ class Index {
         size_t current_index() const;
         int get_generation() const;
         std::string name() const;
+        bool validate() const;
         
         toml::table* index_at(size_t index);
         toml::table* previous_index();
