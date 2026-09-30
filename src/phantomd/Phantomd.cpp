@@ -3,7 +3,7 @@
 using namespace std;
 
 int main(){
-    cout << "Starting PhantomDisk Daemon..." << endl;
+    cout << "PhantomDisk Daemon" << endl;
 
     return 0;
 
