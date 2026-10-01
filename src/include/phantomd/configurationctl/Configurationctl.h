@@ -3,6 +3,7 @@
 #include <filesystem>
 #include <toml++/toml.h>
 #include "types/StorageConfig.h"
+#include "types/LogicalDriveConfig.h"
 
 class Configurationctl {
     private:
@@ -16,6 +17,7 @@ class Configurationctl {
         Configurationctl(const std::filesystem::path& configFilePath);
         
         StorageConfig getStorageConfig() const;
+        LogicalDriveConfig getLogicalDriveConfig() const;
 
         bool load();
         bool save();

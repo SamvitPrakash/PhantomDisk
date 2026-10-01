@@ -1,7 +1,9 @@
 #include "configurationctl/Configurationctl.h"
 #include "types/StorageConfig.h"
 
+#include <filesystem>
 #include <stdexcept>
+#include <string>
 #include <toml++/impl/array.hpp>
 #include <toml++/impl/table.hpp>
 
@@ -30,6 +32,24 @@ StorageConfig Configurationctl::getStorageConfig() const {
     }
 
     return storageConfig;
+}
+
+LogicalDriveConfig Configurationctl::getLogicalDriveConfig() const {
+    if(this->CONFIG.empty()) {
+        throw std::runtime_error("Configuration not loaded. Call load() before accessing logical drive configuration.");
+    }
+
+    LogicalDriveConfig logicalDriveConfig = LogicalDriveConfig();
+
+    logicalDriveConfig.PAGE = std::filesystem::path(this->root<std::string>("logical_mount"));
+
+    const toml::array *devices = CONFIG["devices"].as_array();
+    for (std::size_t i = 0; i < devices->size(); ++i) {
+        logicalDriveConfig.FRAMES.insert(this->devices<std::string>(i, "name"), this->devices<std::string>(i, "physical_mount"));
+    }
+
+    return logicalDriveConfig;
+
 }
 
 bool Configurationctl::load() {
