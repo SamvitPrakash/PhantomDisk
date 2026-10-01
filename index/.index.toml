@@ -4,6 +4,14 @@ last_updated = 1790707483
 name = 'OneDrive:'
 
 [[index]]
-device = 'new_device'
-logical_address = '/mnt/new_device'
-physical_address = '/dev/sdb'
+id = 0
+parent = -1
+name = ""
+type = "root"
+
+[[index]]
+id = 1
+parent = 0
+name = "example.txt"
+type = "file"
+physical_address = "/path/to/file"
